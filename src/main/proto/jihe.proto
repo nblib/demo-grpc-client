@@ -1,0 +1,26 @@
+syntax = "proto3"; // 使用语言版本,这里指定使用protobuf3
+
+option java_multiple_files = false; //是否将定义的message,enum等生成一个独立的外部类,如果true,则每个message,enum生成一个class文件,否则,message,enum会统一作为内部类包含在HelloProto类中
+option java_package = "demo.hewe.io.jihe"; //定义生成的java类所在的包
+//option java_outer_classname = "HelloProto"; //定义这个.proto文件生成的类的名称
+
+package jihe; //定义这个.proto文件的作用域,类似java的包的作用,在别的.proto文件引用这个文件中的message时,通过包名.message引用.
+
+message Car {
+    int32 id = 1;
+    string name = 2;
+    string color = 3;
+}
+//list
+message ListCar {
+    repeated Car car = 1;
+}
+//Map
+message MapCar {
+    map<int32, Car> cars = 1;
+}
+//service
+service JiheService {
+    //将list 类型转换为map类型
+    rpc transferToMap (ListCar) returns (MapCar);
+}
